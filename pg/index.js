@@ -9,10 +9,10 @@ import { Client } from 'pg'
  */
 async function main (params) {
   const client = new Client({
-    host: 'pc-t4na4907du3902202.pg.polardb.singapore.rds.aliyuncs.com',
+    host: 'pc-j6co18fl35v405l3d.pg.polardb.rds.aliyuncs.com',
     user: 'root1',
     //端口号
-    port: 1521,
+    port: 1921,
     password: 'Gaojing030113',
     database: 'test',
   })
