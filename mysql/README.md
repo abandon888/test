@@ -11,3 +11,5 @@ k6 run --insecure-skip-tls-verify test-k6.js
 ```bash
 wsk api list -i
 ```
+# mysql数据库测试
+mysql -hpc-j6c0uhn5he1wblpq9.mysql.polardb.rds.aliyuncs.com -P3306 -uroot1 -pGaojing030113

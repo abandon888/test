@@ -1,7 +1,5 @@
 {
   "dependencies": {
     "mysql": "^2.18.1",
-    "perf_hooks": "^0.0.1",
-    "pg": "^8.11.3"
   }
 }
