@@ -10,8 +10,9 @@ const mysql = require('mysql')
 function main (params) {
   return new Promise((resolve, reject) => {
     const connection = mysql.createConnection({
-      host: 'pc-t4n2foqc34n13t1pt.mysql.polardb.singapore.rds.aliyuncs.com',
+      host: 'pc-j6c8k2tb4145796a5.mysql.polardb.rds.aliyuncs.com',
       user: 'root1',
+      port: 3306,
       password: 'Gaojing030113',
       database: 'test',
     })
