@@ -1,47 +1,36 @@
 import http from 'k6/http'
-import { sleep } from 'k6'
-import { Rate } from 'k6/metrics'
+import { check, sleep } from 'k6'
 
-const urls = [
-  'https://localhost:31001/api/23bc46b1-71f6-4ed5-8c54-816aa4f8c502/test/pg',
-]
+export let options = {
+  //忽略证书错误
 
-// const api1Rate = 0.3; // 30%用api1测试
-// const api2Rate = 0.7; // 70%用api2测试
-
-const getRateApi1 = new Rate('get_rate_api1')
-// const getRateApi2 = new Rate('get_rate_api2');
-
-export const options = {
-  vus: 100, // 要模拟的并发用户数
-  duration: '30s', // 测试的时长
+  stages: [
+    { duration: '30s', target: 20 }, // 模拟 20 个用户 30 秒
+    // { duration: '1m', target: 50 },  // 模拟 50 个用户 1 分钟
+  ],
 }
 
 export default function () {
-  let url = urls[0]
-
-  const headers = { 'Content-Type': 'application/json' } // 请求头
-  const id = Math.floor(Math.random() * 9999) + 1 // 随机生成id
-  const key1 = `xuz${String(id).padStart(4, '0')}` // 生成key1
-  const key2 = `value${String(id).padStart(4, '0')}` // 生成key2
-  const body = JSON.stringify({
-    action: 'insert',
-    msg: {
-      key1,
-      key2,
+  let params = {
+    headers: {
+      'Content-Type': 'application/json',
     },
+  }
+  /**@description 传入的参数 
+   * @param {string} action - 操作类型（select、insert、update、delete)
+   * @param {string} msg - 操作信息(查询：无，插入：插入的数据，更新：更新的数据，删除：删除的条件)
+   * */
+  let body = JSON.stringify({
+    action: 'insert',
+    msg: 'k6 test'
   })
 
+  let response = http.post('https://localhost:31001/api/23bc46b1-71f6-4ed5-8c54-816aa4f8c502/myapi/testDb', body, params)
 
-
-  const res = http.post(url, JSON.stringify(body), { headers: headers })
-
-  getRateApi1.add(res.status === 200) // 记录api1请求成功的比例
-  // if (url === urls[0]) {
-  //   getRateApi1.add(res.status === 200); // 记录api1请求成功的比例
-  // } else {
-  //   getRateApi2.add(res.status === 200); // 记录api2请求成功的比例
-  // }
+  check(response, {
+    'is status 200': (r) => r.status === 200,
+    'is duration < 500ms': (r) => r.timings.duration < 500
+  })
 
   sleep(1)
 }
