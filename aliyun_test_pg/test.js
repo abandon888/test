@@ -21,11 +21,11 @@ export default function () {
    * @param {string} msg - 操作信息(查询：无，插入：插入的数据，更新：更新的数据，删除：删除的条件)
    * */
   let body = JSON.stringify({
-    action: 'select',
-    // msg: 'k6 test'
+    action: 'insert',
+    msg: 'k6 test'
   })
 
-  let response = http.post('https://localhost:31001/api/23bc46b1-71f6-4ed5-8c54-816aa4f8c502/test/pg', body, params)
+  let response = http.post('https://test-pg-gxvxxklnrd.cn-hongkong.fcapp.run', body, params)
 
   check(response, {
     'is status 200': (r) => r.status === 200,
