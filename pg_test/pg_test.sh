@@ -1,0 +1,1 @@
+k6 run --insecure-skip-tls-verify test.js -u 10 -d 30s -q

@@ -1,4 +1,4 @@
-import { Client } from 'pg'
+const { Client } = require('pg')
 
 /**
  * @description 云函数入口函数
@@ -52,4 +52,4 @@ async function main (params) {
   }
 }
 
-export { main }
+exports.main = main
